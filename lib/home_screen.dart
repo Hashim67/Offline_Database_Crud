@@ -83,14 +83,17 @@ class _HomeScreenState extends State<HomeScreen> {
         onPressed: ()async{
           if(id==null){
           await _addItem();
+           Navigator.pop(context);
           }
           if(id != null){
           await _updateItem(id);
+           Navigator.pop(context);
           }
-          _titleController.text = '';
-          _descriptionController.text ='';
+          _titleController.clear();
+          _descriptionController.clear();
         },
         child: Text(id == null ? 'Create New' : 'Update'),
+       
         ),
       ],
     ),
@@ -104,6 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text('OFFLINE DATA SQFLITE'),
         centerTitle: true,
+        backgroundColor: Colors.orange,
       ),
       body: ListView.builder(
         itemCount: _journals.length,
@@ -122,11 +126,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: (){
                      _showForm(_journals[index]['id']);
                     }, 
-                    icon: const Icon(Icons.edit)
+                    icon: const Icon(Icons.edit, color: Colors.green,)
                     ),
                   IconButton(
                     onPressed: ()=>_deleteItem(_journals[index]['id']),
-                    icon: const Icon(Icons.delete))
+                    icon: const Icon(Icons.delete, color: Colors.red,))
                 ],
               ),
             ),
