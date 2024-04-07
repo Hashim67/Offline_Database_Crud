@@ -69,7 +69,10 @@ class _FloatingFormState extends State<FloatingForm> {
                 ),
                  InkWell(
                   onTap: () {
-            // value.addCategory(value.nameController.text, value.professionController.text);
+               value.addJournal(
+                value.titleController.text,
+                value.descriptionController.text
+               );
  
           Navigator.pop(context);
                   

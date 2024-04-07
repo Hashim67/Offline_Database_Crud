@@ -18,9 +18,9 @@ class _NameListScreenState extends State<NameListScreen> {
   @override
   void initState() {
     super.initState();
-    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-    //   Provider.of<OfflineDatabaseProvider>(context, listen: false).;
-    // });
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<OfflineDatabaseProvider>(context, listen: false).JournalProvider();
+    });
   }
 
   @override
@@ -33,69 +33,43 @@ class _NameListScreenState extends State<NameListScreen> {
       ),
       body: Consumer<OfflineDatabaseProvider>(
         builder: (context, value, child) {
-          return ListView.builder(
+          // return value.journals.isEmpty? const Center(child: Text('No Data')) : 
+      return    ListView.builder(
             itemCount: value.journals.length,
             itemBuilder: (context, index) {
 
+            final journal = value.journals[index];
 
               return Card(
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
-                  child: InkWell(
-                    onTap: () {
-                      // Category newData = Category(
-                      //     id: value.items[index].id,
-                      //     name: value.nameController.text =
-                      //         value.items[index].name,
-                      //     profession: value.professionController.text =
-                      //         value.items[index].profession);
-                      // value.updateCategory(newData);
-
-                      SchedulerBinding.instance.addPostFrameCallback((_) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => FormScreen()));
-                      });
-                    },
+                  
+                    
                     child: Consumer<OfflineDatabaseProvider>(
                       builder: ( context, value,  child) {
                         return ListTile(
-                          leading: Text(
-                            value.journals[index].toString(),
-                          ),
-                          title: Row(
-                            children: [
-                               value.journals[index]['title'],
-                        
-                              
-                            ],
-                          ),
-                          subtitle: Row(
-                            children: [
-                              value.journals[index]['description'],
-                        
-                             
-                            ],
-                          ),
+                          title: Text(journal.title),
+                          subtitle:Text(journal.description),
+                  
                                                 trailing: PopupMenuButton(
                         icon: const Icon(Icons.more_vert),
                         itemBuilder: (context) => [
                           PopupMenuItem(
                             child: const Text('Edit'),
                             onTap: () {
-                              // Category newData = Category(
-                              //     id: category.id,
-                              //     title: value.titleController.text =
-                              //         category.title,
-                              //     body: value.bodyController.text =
-                              //         category.body);
-                              // value.updateCategory(newData);
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //       builder: (context) => const FormScreen()),
-                              // );
+
+                      Journal newData = Journal(
+                        id: journal.id,
+                        title: value.titleController.text = journal.title, 
+                        description: value.descriptionController.text = journal.description);
+                        value.updateJournal(newData);
+                                              SchedulerBinding.instance.addPostFrameCallback((_) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FormScreen()));
+                      });
+                           
                             },
                           ),
                           PopupMenuItem(
@@ -115,7 +89,7 @@ class _NameListScreenState extends State<NameListScreen> {
                                     ),
                                     ElevatedButton(
                                       onPressed: () {
-                                        value.deleteItem();
+                                        value.deleteItem(journal.id);
                                         Navigator.of(ctx).pop();
                                       },
                                       child: const Text("Yes"),
@@ -134,7 +108,7 @@ class _NameListScreenState extends State<NameListScreen> {
                        },
                      
                     ),
-                  ),
+                  
                 ),
                 
               );

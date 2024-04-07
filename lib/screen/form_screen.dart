@@ -81,7 +81,10 @@ class _FormScreenState extends State<FormScreen> {
     //     profession: value.professionController.text,
     //   ),
     // );
-
+    value.updateJournal(
+      Journal(id: value.catIdGet, title: value.titleController.text, description: value.descriptionController.text),
+    );
+       
                   Navigator.pop(context);
                 },
                 child: Container(

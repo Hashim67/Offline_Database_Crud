@@ -71,7 +71,7 @@ static Future<List<Map<String, dynamic >>> getItem(int id)async{
 
 ///// Update Item /////
 
-static Future<int> updateItem(int id, String title, String? description)async{
+static Future<int> updateItem( int id, String title, String? description )async{
   final db = await SQLHelper.db();
   final data = {
     'title' : title,
