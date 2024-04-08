@@ -33,8 +33,8 @@ class _NameListScreenState extends State<NameListScreen> {
       ),
       body: Consumer<OfflineDatabaseProvider>(
         builder: (context, value, child) {
-          // return value.journals.isEmpty? const Center(child: Text('No Data')) : 
-      return    ListView.builder(
+         return value.journals.isEmpty? const Center(child: Text('No Data in this List')) : 
+       ListView.builder(
             itemCount: value.journals.length,
             itemBuilder: (context, index) {
 

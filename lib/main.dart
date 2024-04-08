@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:offline_database_crud/Api/Provider/api_display_data_provider.dart';
+import 'package:offline_database_crud/Api/Screen/api_display_data_list.dart';
 import 'package:offline_database_crud/offline_database_provider.dart';
-import 'package:offline_database_crud/screen/List_view_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -15,7 +16,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-          ChangeNotifierProvider(create: (_)=>OfflineDatabaseProvider()),    
+          ChangeNotifierProvider(create: (_)=>OfflineDatabaseProvider()),
+          ChangeNotifierProvider(create: (_)=>CategoryProvider()), 
+            
       ],
       child: MaterialApp(       
         debugShowCheckedModeBanner: false,      
@@ -24,7 +27,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),         
           useMaterial3: true,       
           ),       
-          home: const NameListScreen(),     
+          home: HomeScreen(),     
           ),
       );
   }

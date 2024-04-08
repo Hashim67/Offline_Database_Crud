@@ -8,7 +8,8 @@ class SQLHelper{
 
 static Future<void> createTables(sql.Database database) async {
   await database.execute("""
-    CREATE TABLE items (
+    CREATE TABLE items 
+     (
       id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
       title TEXT, 
       description TEXT, 

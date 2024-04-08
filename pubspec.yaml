@@ -37,6 +37,9 @@ dependencies:
   cupertino_icons: ^1.0.6
   sqflite: ^2.3.3
   provider: ^6.1.2
+  http: ^1.2.1
+  connectivity: ^3.0.6
+
 
 dev_dependencies:
   flutter_test:
