@@ -38,24 +38,8 @@ class SQLHelper {
     }
   }
 
-  // Method to store categories in the database
-  // static Future<void> storeCategories(List<DatabaseCategoryModel> categories) async {
-  //   final db = await SQLHelper.db();
-  //   try {
-  //     final batch = db.batch();
-  //     for (var category in categories) {
-  //       batch.insert('categories', category.toMap());
-  //     }
-  //     print('Batch operations prepared successfully');
-  //     final results = await batch.commit(noResult: true); // Capture the results of the batch commit
-  //     print('Categories stored successfully ${}');
-  //     print('Results: $results'); // Print the results to see if there are any errors
-  //   } catch (e) {
-  //     print('Error storing categories: $e');
-  //     throw Exception('Error storing categories: $e');
-  //   }
-  // }
 
+  // Method to store categories in the database
   static Future<void> storeCategories(List<DatabaseCategoryModel> categories) async {
   final db = await SQLHelper.db();
   try {
@@ -74,20 +58,8 @@ class SQLHelper {
 }
 
 
-  // Method to retrieve categories from the database
-  // static Future<List<DatabaseCategoryModel>> getCategories() async {
-  //   final db = await SQLHelper.db();
-  //   try {
-  //     final List<Map<String, dynamic>> categoryMapList = await db.query('categories');
-  //     print('Categories retrieved successfully ${categoryMapList}'); // Add logging statement
-  //     return categoryMapList.map((categoryMap) => DatabaseCategoryModel.fromMap(categoryMap)).toList();
-  //   } catch (e) {
-  //     print('Error getting categories: $e');
-  //     throw Exception('Error getting categories: $e');
-  //   }
-  // }
 
-
+// Method to get categories in the database
   static Future<List<DatabaseCategoryModel>> getCategories() async {
   final db = await SQLHelper.db();
   try {
@@ -112,5 +84,58 @@ class SQLHelper {
       throw Exception('Error clearing categories: $e');
     }
   }
+
+  //////  Create Items //////
+
+  // Method to create a new category in the database
+  static Future<void> createCategory(DatabaseCategoryModel category) async {
+    final db = await SQLHelper.db();
+    try {
+      await db.insert(
+        'categories',
+        category.toMap(),
+        conflictAlgorithm: sql.ConflictAlgorithm.replace,
+      );
+      print('Category created successfully');
+    } catch (e) {
+      print('Error creating category: $e');
+      throw Exception('Error creating category: $e');
+    }
+  }
+
+
+// Method to update a category in the database
+  static Future<void> updateCategory(DatabaseCategoryModel category) async {
+    final db = await SQLHelper.db();
+    try {
+      await db.update(
+        'categories',
+        category.toMap(),
+        where: 'id = ?',
+        whereArgs: [category.id],
+      );
+      print('Category updated successfully');
+    } catch (e) {
+      print('Error updating category: $e');
+      throw Exception('Error updating category: $e');
+    }
+  }
+
+  // Method to delete a category from the database
+  static Future<void> deleteCategory(int id) async {
+    final db = await SQLHelper.db();
+    try {
+      await db.delete(
+        'categories',
+        where: 'id = ?',
+        whereArgs: [id],
+      );
+      print('Category deleted successfully');
+    } catch (e) {
+      print('Error deleting category: $e');
+      throw Exception('Error deleting category: $e');
+    }
+  }
+
 }
 

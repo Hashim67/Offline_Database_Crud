@@ -1,19 +1,20 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:offline_database_crud/offline_database_provider.dart';
+import 'package:offline_database_crud/Api/Data/Network/network_api_service.dart';
+import 'package:offline_database_crud/Api/Models/offline_database_category_model.dart';
+
+import 'package:offline_database_crud/Api/Provider/api_display_data_provider.dart';
+import 'package:offline_database_crud/Offline%20Database/sqflite_helper.dart';
+
 import 'package:provider/provider.dart';
-
-
-class FormScreen extends StatefulWidget {
-
-  const FormScreen({Key? key}) : super(key: key);
-  
+class FormScreenApi extends StatefulWidget {
+  const FormScreenApi({super.key});
 
   @override
-  State<FormScreen> createState() => _FormScreenState();
+  State<FormScreenApi> createState() => _FormScreenApiState();
 }
 
-class _FormScreenState extends State<FormScreen> {
-  
+class _FormScreenApiState extends State<FormScreenApi> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,14 +25,14 @@ class _FormScreenState extends State<FormScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
-        child: Consumer<OfflineDatabaseProvider>(builder: ((context, value, child) {
+        child: Consumer<CategoryProvider>(builder: ((context, categoryProvider, child) {
 
           return Column(
             children: [
               TextFormField(
                 autofocus: false,
                 decoration: const InputDecoration(
-                  hintText: 'Enter Title',
+                  hintText: 'Enter Name',
                   prefixIcon: Icon(Icons.person),
                   //  labelText: ,
                   border: OutlineInputBorder(),
@@ -40,10 +41,10 @@ class _FormScreenState extends State<FormScreen> {
                     fontSize: 15,
                   ),
                 ),
-                controller: value.titleController,
+                controller: categoryProvider.nameController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please Enter Title';
+                    return 'Please Enter Name';
                   }
                   return null;
                 },
@@ -60,7 +61,7 @@ class _FormScreenState extends State<FormScreen> {
                     fontSize: 15,
                   ),
                 ),
-                controller: value.descriptionController,
+                controller: categoryProvider.descriptionController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please Enter Description';
@@ -72,15 +73,35 @@ class _FormScreenState extends State<FormScreen> {
                 height: 15,
               ),
               InkWell(
-                onTap: () {
-  
+               onTap: () async {
+  var res = await NetworkApiService().updateCategoryData(
+    categoryProvider.catIdGet,
+    categoryProvider.nameController.text,
+    categoryProvider.descriptionController.text,
+  );
+  log('Category >>> res statusCode : ${res.statusCode} >>> body : ${res.body}');
+  if (res.statusCode == 200) {
+    // Update the data in the local offline database
+    await SQLHelper.updateCategory(DatabaseCategoryModel(
+      id: categoryProvider.catIdGet,
+      name: categoryProvider.nameController.text,
+      description: categoryProvider.descriptionController.text,
+    ));
 
-    value.updateJournal(
-      Journal(id: value.catIdGet, title: value.titleController.text, description: value.descriptionController.text),
-    );
-       
-                  Navigator.pop(context);
-                },
+    // Update the data in the provider
+    Provider.of<CategoryProvider>(context, listen: false).updateCategory(DatabaseCategoryModel(
+      id: categoryProvider.catIdGet,
+      name: categoryProvider.nameController.text,
+      description: categoryProvider.descriptionController.text,
+    ));
+    await Provider.of<CategoryProvider>(context,
+                              listen: false)
+                          .fetchCategoryList();
+    Navigator.pop(context);
+  } else {
+    print('Something went wrong');
+  }
+},
                 child: Container(
                   height: 50,
                   decoration: BoxDecoration(

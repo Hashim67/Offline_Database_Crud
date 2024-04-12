@@ -100,6 +100,8 @@ class CategoryDatum {
         "image_url": imageUrl,
         "modifier_sets": modifierSets == null ? [] : List<dynamic>.from(modifierSets!.map((x) => x.toMap())),
     };
+
+  toDatabaseModel() {}
 }
 
 class ModifierSet {
