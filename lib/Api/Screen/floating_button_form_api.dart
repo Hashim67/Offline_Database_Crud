@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:offline_database_crud/Api/Models/offline_database_category_model.dart';
 import 'package:offline_database_crud/Api/Provider/api_display_data_provider.dart';
 import 'package:provider/provider.dart';
 

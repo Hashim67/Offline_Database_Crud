@@ -82,12 +82,13 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:offline_database_crud/Api/Models/category_model.dart';
+
 import 'package:offline_database_crud/Api/Models/offline_database_category_model.dart';
 
 import 'package:offline_database_crud/Api/Provider/api_display_data_provider.dart';
 import 'package:offline_database_crud/Api/Screen/floating_button_form_api.dart';
 import 'package:offline_database_crud/Api/Screen/form_screen_api.dart';
+import 'package:offline_database_crud/Api/Screen/search_screen.dart';
 import 'package:provider/provider.dart';
 
 
@@ -119,6 +120,14 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('Get Api List Data'),
         centerTitle: true,
         backgroundColor: Colors.orange,
+                actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              showSearch(context: context, delegate: CategorySearch());
+            },
+          ),
+        ],
       ),
       body: Consumer<CategoryProvider>(
         builder: (context, categoryProvider, _) {
@@ -161,7 +170,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     },
                                   ),
                                   PopupMenuItem(
-                                    onTap: () {},
+                                    onTap: ()async {
+                                       await Provider.of<CategoryProvider>(context, listen: false).deleteCategory(category.id);
+                                    },
                                     child: const Text('Delete'),
                                   ),
                                 ],

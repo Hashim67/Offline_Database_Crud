@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:offline_database_crud/Api/Data/Response/fetch_data_response.dart';
-import 'package:offline_database_crud/Api/Models/category_model.dart';
 import 'package:offline_database_crud/Api/Models/offline_database_category_model.dart';
 import 'package:offline_database_crud/Offline%20Database/sqflite_helper.dart';
 
@@ -18,8 +17,7 @@ final _apidata = HomeViewModel();
   List<DatabaseCategoryModel> _categories = [];
   List<DatabaseCategoryModel> get categories => _categories;
     bool _isLoading = true;
-  //    List<CategoryDatum> _categoriesModel = [];
-  //  List<CategoryDatum> get categoriesList => _categoriesModel;
+
   bool get isLoading => _isLoading;
   int _catId = 0;
      int get catIdGet => _catId;
@@ -93,7 +91,7 @@ Future<void> createCategory(String name, String description) async {
   }
 }
 
-
+///// UPDATE CATEGORY //////
   void updateCategory(DatabaseCategoryModel val){
     if(kDebugMode){
    print('Category Data : ${val.id} >> ${val.name} >>>${val.description}');
@@ -104,6 +102,26 @@ Future<void> createCategory(String name, String description) async {
        categories.name!=val.name;
        categories.description!=val.description;
       }
+    }
+  }
+
+
+  ///// DELETE CATEGORY //////
+    Future<void> deleteCategory(int id) async {
+    try {
+      // Delete category from local database
+      await SQLHelper.deleteCategory(id);
+
+      // Update the list of categories in the provider
+      _categories.removeWhere((category) => category.id == id);
+
+      // Notify listeners that the data has changed
+      notifyListeners();
+
+      print('Category deleted successfully');
+    } catch (e) {
+      print('Error deleting category: $e');
+      throw Exception('Error deleting category: $e');
     }
   }
   // Method to check internet connectivity
