@@ -59,11 +59,13 @@ class SQLHelper {
 
 
 
+
+
 // Method to get categories in the database
-  static Future<List<DatabaseCategoryModel>> getCategories() async {
+static Future<List<DatabaseCategoryModel>> getCategories() async {
   final db = await SQLHelper.db();
   try {
-    final List<Map<String, dynamic>> categoryMapList = await db.query('categories');
+    final List<Map<String, dynamic>> categoryMapList = await db.query('categories', orderBy: 'creation_date DESC');
     print('Categories retrieved successfully');
     return categoryMapList.map((categoryMap) => DatabaseCategoryModel.fromMap(categoryMap)).toList();
   } catch (e) {
@@ -71,6 +73,8 @@ class SQLHelper {
     throw Exception('Error getting categories: $e');
   }
 }
+
+
 
 
   // Method to clear categories from the database
