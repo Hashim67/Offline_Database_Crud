@@ -7,16 +7,16 @@ import 'package:offline_database_crud/Api/Data/Network/base_api_service.dart';
 import 'package:offline_database_crud/Api/Data/app_exception.dart';
 
 
+
 class NetworkApiService extends BaseApiServices {
   @override
   Future getGetApiResponse(String url) async {
     dynamic responseJson;
     try {
-      var headers = {
-        'Accept': 'application/json',
-        'Authorization':
-            'Bearer 104407|gocdr6hYQfhq9dKKjdHOtVJH8rWq8j8UQp9388cMcef8108f'
-      };
+var headers = {
+  'Accept': 'application/json',
+  'Authorization': 'Bearer 142786|AeOu3OznofvA1VHhoqNcVsTZMSRI6AblnZGK8vq45579f341'
+};
       var response = await http.get(Uri.parse(url), headers: headers)
           .timeout(const Duration(seconds: 10));
       responseJson = returnResponse(response);
@@ -24,16 +24,17 @@ class NetworkApiService extends BaseApiServices {
       throw FetchDataException('No Internet Connection');
     }
     log('responseJson get pi >>> $responseJson');
+    
     return responseJson;
   }
 
     @override
 Future<dynamic> getPostApiResponse(String url, String name, String description) async {
   try {
-    var headers = {
-      'Accept': 'application/json',
-      'Authorization': 'Bearer 104407|gocdr6hYQfhq9dKKjdHOtVJH8rWq8j8UQp9388cMcef8108f'
-    };
+var headers = {
+  'Accept': 'application/json',
+  'Authorization': 'Bearer 142786|AeOu3OznofvA1VHhoqNcVsTZMSRI6AblnZGK8vq45579f341'
+};
     Response response = await post(
       Uri.parse(url),
       body: {
@@ -41,7 +42,7 @@ Future<dynamic> getPostApiResponse(String url, String name, String description) 
         'description': description,
       },
       headers: headers,
-    ).timeout(const Duration(seconds: 10));
+    ).timeout(const Duration(seconds: 20));
 
     // Log the status code and response body
     log('Status Code: ${response.statusCode}');
@@ -60,11 +61,10 @@ Future<dynamic> getPostApiResponse(String url, String name, String description) 
    //// Update Category Using Post Api ////
   Future<http.Response> updateCategoryData(
       int categoryId, String catName, String catDes) async {
-    var headers = {
-      'Accept': 'application/json',
-      'Authorization':
-          'Bearer 95651|rVW34MK82bMmf44rNYGnnuGUb6ceZKz7YQd6xmHS2a4344e8'
-    };
+var headers = {
+  'Accept': 'application/json',
+  'Authorization': 'Bearer 142786|AeOu3OznofvA1VHhoqNcVsTZMSRI6AblnZGK8vq45579f341'
+};
     var request = http.MultipartRequest(
         'POST',
         Uri.parse(

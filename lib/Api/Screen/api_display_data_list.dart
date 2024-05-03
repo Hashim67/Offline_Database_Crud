@@ -81,17 +81,285 @@
 // }
 
 
+// import 'package:flutter/material.dart';
+
+
+// //import 'package:offline_database_crud/Api/Models/offline_database_category_model.dart';
+
+// import 'package:offline_database_crud/Api/Provider/api_display_data_provider.dart';
+// import 'package:offline_database_crud/Api/Screen/floating_button_form_api.dart';
+// import 'package:offline_database_crud/Api/Screen/form_screen_api.dart';
+// //import 'package:offline_database_crud/Api/Screen/form_screen_api.dart';
+// import 'package:offline_database_crud/Api/Screen/search_screen.dart';
+// import 'package:provider/provider.dart';
+
+
+
+// class HomeScreen extends StatefulWidget {
+//   const HomeScreen({super.key});
+
+//   @override
+//   _HomeScreenState createState() => _HomeScreenState();
+// }
+
+// class _HomeScreenState extends State<HomeScreen> {
+//   @override
+//   void initState() {
+//     super.initState();
+//     // Fetch offline data after a short delay
+//     // Future.delayed(const Duration(milliseconds: 1), () {
+//       Future.delayed(const Duration(milliseconds: 1), () {
+//   Provider.of<CategoryProvider>(context, listen: false).fetchCategoriesFromDatabase();
+// });
+//       // Provider.of<CategoryProvider>(context, listen: false)
+//       //     .fetchCategoriesFromDatabase();
+//       // Update loading state to false
+//      // Provider.of<CategoryProvider>(context, listen: false).setLoading(false);
+//     //});
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+    
+
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Get Api List Data'),
+//         centerTitle: true,
+//         backgroundColor: Colors.orange,
+//                 actions: [
+//           IconButton(
+//             icon: const Icon(Icons.search),
+//             onPressed: () {
+//               showSearch(context: context, delegate: CategorySearch());
+//             },
+//           ),
+//         ],
+//       ),
+      
+//       body: Consumer<CategoryProvider>(
+//         builder: (context, categoryProvider, _) {
+//           final categories = categoryProvider.categories;
+//     if (categoryProvider.categories.isEmpty) {
+//       return const Center(child: Text('Not Fetch Data'));
+//     }     
+//     else {
+//             // Show offline data
+//             return ListView.builder(
+//               itemCount: categories.length,
+//               itemBuilder: (context, index) {
+//                 final category = categories[index];
+//                 return Card(
+//                   child: Padding(
+//                     padding: const EdgeInsets.all(20.0),
+//                     child: ListTile(
+//                       leading: Text(category.id.toString()),
+//                       title: Text(category.name.toString()),
+//                       subtitle: Text(category.description.toString()),
+//                        trailing: PopupMenuButton(
+//                                 icon: const Icon(Icons.more_vert),
+//                                 itemBuilder: (context) => [
+//                                   PopupMenuItem(
+//                                     child: const Text('Edit'),
+//                                     onTap: () {
+                              
+//                                         //                                    DatabaseCategoryModel newData= DatabaseCategoryModel(
+//                                         // id: category.id,
+//                                         // name: categoryProvider.nameController.text=category.name.toString(),
+//                                         // description:categoryProvider.descriptionController.text=category.description.toString(),
+
+//                                      // );
+//                                      // categoryProvider.updateCategory(newData);
+//                                       Navigator.push(
+//                                 context,
+//                                 MaterialPageRoute(
+//                                     builder: (context) => const FormScreenApi()),
+//                               );
+//                                     },
+//                                   ),
+//                                   PopupMenuItem(
+//                                     onTap: ()async {
+//                                       //  await Provider.of<CategoryProvider>(context, listen: false).deleteCategory(category.id);
+//                                     },
+//                                     child: const Text('Delete'),
+//                                   ),
+//                                 ],
+//                               ),
+//                     ),
+//                   ),
+//                 );
+//               },
+//             );
+//           }
+//         },
+//       ),
+//             floatingActionButton: Consumer<CategoryProvider>(
+//         builder: (BuildContext context, CategoryProvider value, Widget? child) { 
+//           return FloatingActionButton(
+//           onPressed: (){
+//                    value.nameController.clear();
+//                     value.descriptionController.clear();
+//             Navigator.push(
+//                               context,
+//                               MaterialPageRoute(
+//                                   builder: (context) => FloatingButtonFormApi()));
+//           },
+//           child: const Icon(Icons.add),
+//           );
+//          },
+     
+//       ),
+//     );
+    
+//   }
+// }
+
+
+
+
+// import 'package:flutter/material.dart';
+
+// import 'package:offline_database_crud/Api/Models/offline_database_category_model.dart';
+
+// import 'package:offline_database_crud/Api/Provider/api_display_data_provider.dart';
+// import 'package:offline_database_crud/Api/Screen/floating_button_form_api.dart';
+// import 'package:offline_database_crud/Api/Screen/form_screen_api.dart';
+// import 'package:offline_database_crud/Api/Screen/search_screen.dart';
+// import 'package:provider/provider.dart';
+
+
+
+// class HomeScreen extends StatefulWidget {
+//   @override
+//   _HomeScreenState createState() => _HomeScreenState();
+// }
+
+// class _HomeScreenState extends State<HomeScreen> {
+//   @override
+//   // void initState() {
+//   //   super.initState();
+//   //   // Fetch offline data after a short delay
+//   //    Provider.of<CategoryProvider>(context, listen: false).fetchCategoryList();
+//   //   // Future.delayed(const Duration(milliseconds: 0), () {
+//   //   //   Provider.of<CategoryProvider>(context, listen: false)
+//   //   //       .fetchCategoryList();
+//   //   //   // Update loading state to false
+//   //   //   Provider.of<CategoryProvider>(context, listen: false).setLoading(false);
+//   //   // });
+//   // }
+//   void initState() {
+//   super.initState();
+//   print('Initializing HomeScreen');
+//   // Fetch offline data after a short delay
+//   Provider.of<CategoryProvider>(context, listen: false).fetchCategoryList();
+// }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     print('Building HomeScreen');
+
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Get Api List Data'),
+//         centerTitle: true,
+//         backgroundColor: Colors.orange,
+//                 actions: [
+//           IconButton(
+//             icon: const Icon(Icons.search),
+//             onPressed: () {
+//               showSearch(context: context, delegate: CategorySearch());
+//             },
+//           ),
+//         ],
+//       ),
+//       body: Consumer<CategoryProvider>(
+//         builder: (context, categoryProvider, _) {
+//           final categories = categoryProvider.categories;
+//           if (categoryProvider.isLoading) {
+//             // Show loading indicator
+//             return const Center(child: CircularProgressIndicator());
+//           }  else if(categories.isNotEmpty ) {
+//             // Show offline data
+//             return ListView.builder(
+//               itemCount: categories.length,
+//               itemBuilder: (context, index) {
+//                 final category = categories[index];
+//                 return Card(
+//                   child: Padding(
+//                     padding: const EdgeInsets.all(20.0),
+//                     child: ListTile(
+//                       leading: Text(category.id.toString()),
+//                       title: Text(category.name),
+//                       subtitle: Text(category.description),
+//                        trailing: PopupMenuButton(
+//                                 icon: const Icon(Icons.more_vert),
+//                                 itemBuilder: (context) => [
+//                                   PopupMenuItem(
+//                                     child: const Text('Edit'),
+//                                     onTap: () {
+                              
+//                                                                            DatabaseCategoryModel newData= DatabaseCategoryModel(
+//                                         id: category.id,
+//                                         name: categoryProvider.nameController.text=category.name.toString(),
+//                                         description:categoryProvider.descriptionController.text=category.description.toString(),
+
+//                                       );
+//                                       categoryProvider.updateCategory(newData);
+//                                       Navigator.push(
+//                                 context,
+//                                 MaterialPageRoute(
+//                                     builder: (context) => const FormScreenApi()),
+//                               );
+//                                     },
+//                                   ),
+//                                   PopupMenuItem(
+//                                     onTap: ()async {
+//                                        await Provider.of<CategoryProvider>(context, listen: false).deleteCategory(category.id);
+//                                     },
+//                                     child: const Text('Delete'),
+//                                   ),
+//                                 ],
+//                               ),
+//                     ),
+//                   ),
+//                 );
+//               },
+//             );
+//           }else {
+//           return const Center(child: Text("No categories found"));
+//         }
+//         },
+//       ),
+//             floatingActionButton: Consumer<CategoryProvider>(
+//         builder: (BuildContext context, CategoryProvider value, Widget? child) { 
+//           return FloatingActionButton(
+//           onPressed: (){
+//                    value.nameController.clear();
+//                     value.descriptionController.clear();
+//             Navigator.push(
+//                               context,
+//                               MaterialPageRoute(
+//                                   builder: (context) => FloatingButtonFormApi()));
+//           },
+//           child: const Icon(Icons.add),
+//           );
+//          },
+     
+//       ),
+      
+//     );
+    
+//   }
+  
+// }
+
 import 'package:flutter/material.dart';
-
-import 'package:offline_database_crud/Api/Models/offline_database_category_model.dart';
-
-import 'package:offline_database_crud/Api/Provider/api_display_data_provider.dart';
 import 'package:offline_database_crud/Api/Screen/floating_button_form_api.dart';
+import 'package:provider/provider.dart';
+import 'package:offline_database_crud/Api/Models/offline_database_category_model.dart';
+import 'package:offline_database_crud/Api/Provider/api_display_data_provider.dart';
 import 'package:offline_database_crud/Api/Screen/form_screen_api.dart';
 import 'package:offline_database_crud/Api/Screen/search_screen.dart';
-import 'package:provider/provider.dart';
-
-
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -102,66 +370,55 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    // Fetch offline data after a short delay
-    Future.delayed(const Duration(milliseconds: 0), () {
-      Provider.of<CategoryProvider>(context, listen: false)
-          .fetchCategoryList();
-      // Update loading state to false
-      Provider.of<CategoryProvider>(context, listen: false).setLoading(false);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<CategoryProvider>(context, listen: false).fetchCategoryList();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Get Api List Data'),
         centerTitle: true,
         backgroundColor: Colors.orange,
-                actions: [
+        actions: [
           IconButton(
             icon: const Icon(Icons.search),
-            onPressed: () {
-              showSearch(context: context, delegate: CategorySearch());
-            },
+            onPressed: () => showSearch(context: context, delegate: CategorySearch()),
           ),
         ],
       ),
       body: Consumer<CategoryProvider>(
-        builder: (context, categoryProvider, _) {
-          final categories = categoryProvider.categories;
-          if (categoryProvider.isLoading) {
-            // Show loading indicator
+        builder: (context, provider, child) {
+          if (provider.isLoading) {
             return const Center(child: CircularProgressIndicator());
-          }  else {
-            // Show offline data
+          } else if (provider.categories.isEmpty) {
+            return const Center(child: Text("No categories found"));
+          } else {
             return ListView.builder(
-              itemCount: categories.length,
+              itemCount: provider.categories.length,
               itemBuilder: (context, index) {
-                final category = categories[index];
+                final category = provider.categories[index];
                 return Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: ListTile(
-                      leading: Text(category.id.toString()),
-                      title: Text(category.name),
-                      subtitle: Text(category.description),
-                       trailing: PopupMenuButton(
+                  child: ListTile(
+                    leading: Text(category.id.toString()),
+                    title: Text(category.name),
+                    subtitle: Text(category.description),
+                  trailing: PopupMenuButton(
                                 icon: const Icon(Icons.more_vert),
                                 itemBuilder: (context) => [
                                   PopupMenuItem(
                                     child: const Text('Edit'),
                                     onTap: () {
                               
-                                                                           DatabaseCategoryModel newData= DatabaseCategoryModel(
+                                      DatabaseCategoryModel newData= DatabaseCategoryModel(
                                         id: category.id,
-                                        name: categoryProvider.nameController.text=category.name.toString(),
-                                        description:categoryProvider.descriptionController.text=category.description.toString(),
+                                        name: provider.nameController.text=category.name.toString(),
+                                        description:provider.descriptionController.text=category.description.toString(),
 
                                       );
-                                      categoryProvider.updateCategory(newData);
+                                      provider.updateCategory(newData);
                                       Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -177,7 +434,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ],
                               ),
-                    ),
                   ),
                 );
               },
@@ -194,7 +450,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => FloatingButtonFormApi()));
+                                  builder: (context) => const FloatingButtonFormApi()));
           },
           child: const Icon(Icons.add),
           );
@@ -202,9 +458,5 @@ class _HomeScreenState extends State<HomeScreen> {
      
       ),
     );
-    
   }
 }
-
-
-
