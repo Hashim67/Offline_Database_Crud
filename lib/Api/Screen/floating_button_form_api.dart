@@ -90,7 +90,7 @@ class _FloatingButtonFormApiState extends State<FloatingButtonFormApi> {
                       color: Colors.orange,
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: const Center(child: Text('Submit')),
+                    child: value.buttonLoading ?  const Center(child: CircularProgressIndicator(color: Colors.white,))  :    const Center(child: Text('Submit')),
                   ),
                 ),
             ],

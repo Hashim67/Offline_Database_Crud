@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:offline_database_crud/Api/Screen/floating_button_form_api.dart';
+
 import 'package:provider/provider.dart';
 import 'package:offline_database_crud/Api/Models/offline_database_category_model.dart';
 import 'package:offline_database_crud/Api/Provider/api_display_data_provider.dart';
@@ -23,17 +24,18 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Get Api List Data'),
-        centerTitle: true,
-        backgroundColor: Colors.orange,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () => showSearch(context: context, delegate: CategorySearch()),
-          ),
-        ],
-      ),
+ appBar: AppBar(
+  title: const Text('Get Api List Data'),
+  centerTitle: true,
+  backgroundColor: Colors.orange,
+  actions: [
+    IconButton(
+      icon: const Icon(Icons.search),
+      onPressed: () => showSearch(context: context, delegate: CategorySearch()),
+    ),
+  ],
+),
+
       body: Consumer<CategoryProvider>(
         builder: (context, provider, child) {
           if (provider.isLoading) {

@@ -1,5 +1,9 @@
+
+
+import 'dart:developer';
+
 import 'package:offline_database_crud/Api/Data/Response/api_response.dart';
-import 'package:offline_database_crud/Api/Data/Response/status.dart';
+
 import 'package:offline_database_crud/Api/Models/category_model.dart';
 import 'package:offline_database_crud/Api/Models/offline_database_category_model.dart';
 import 'package:offline_database_crud/Offline%20Database/sqflite_helper.dart';
@@ -10,33 +14,21 @@ class HomeViewModel {
   ApiResponse<List<CategoryModel>> categoryList = ApiResponse.loading();
 
 Future<void> fetchCategoryListFromAPI() async {
+  setCategoryList(ApiResponse.loading());
   try {
+      
     // Fetch categories from the API
-    final CategoryModel categoryResponse = await _myRepo.fechCategoryList();
-    
-    // Wrap the response in ApiResponse object
-    final ApiResponse<CategoryModel> apiResponse = ApiResponse.completed(categoryResponse);
-
-    if (apiResponse.status == Status.COMPLETED && apiResponse.data != null) {
-      // Transform CategoryModel objects into DatabaseCategoryModel objects
-      List<DatabaseCategoryModel> databaseCategories = apiResponse.data!.data!.map((category) {
-        return DatabaseCategoryModel(
-          id: category.id ?? 0,
-          name: category.name ?? '',
-          description: category.description ?? '',
-          // Add other properties as needed
-        );
-      }).toList();
-
-      // Store the transformed categories in the offline database
-      await SQLHelper.storeCategories(databaseCategories);
-    } else {
-      throw Exception('Error fetching categories: ${apiResponse.message}');
-    }
+    final CategoryModel categoryResponse = (await _myRepo.fetchCategoryList()) as CategoryModel;
+     await SQLHelper.storeCategories(categoryResponse.data! as List<DatabaseCategoryModel>);
+     log('Data Arrive or Not >>> ${categoryResponse.data!}');
+      log('Data Arrive or op >>> ${categoryResponse.data! as List<DatabaseCategoryModel>}');
+      log('Store >>> ${SQLHelper.storeCategories(categoryResponse.data! as List<DatabaseCategoryModel>)}');
+      // Set the category list in the provider
+       setCategoryList(ApiResponse.completed(categoryResponse.data!.cast<CategoryModel>()));
+    log('Data Arrive or yes >>> ${categoryResponse.data!.cast<CategoryModel>()}');
   } catch (error) {
-    print('Error fetching categories: $error');
-    throw Exception('Error fetching categories: $error');
-  }
+      setCategoryList(ApiResponse.error(error.toString()));
+    }
 }
 
 
