@@ -38,7 +38,7 @@ dependencies:
   sqflite: ^2.3.3
   provider: ^6.1.2
   http: ^1.2.1
-  # connectivity_plus: any
+  connectivity: ^3.0.6
   shared_preferences: ^2.2.3
   
 
